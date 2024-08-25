@@ -7,42 +7,50 @@ import { encodedRedirect, Message } from "@/lib/utils";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function LoginPage({
+export default async function SignUpPage({
   searchParams,
 }: {
   searchParams: Message;
 }) {
-  const handleSignIn = async (formData: FormData) => {
+  const handleSignUp = async (formData: FormData) => {
     "use server";
-
     const supabase = createClient();
 
+    const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+    const { error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          display_name: name,
+        },
+      },
     });
 
     if (error) {
-      encodedRedirect("error", "/login", error.message);
+      return encodedRedirect("error", "/signup", error.message);
     }
-
-    return redirect("/");
+    return redirect("/verify");
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
-      <Card className="w-[450px]   p-8">
-        <CardTitle className="text-left">Login to Fin</CardTitle>
+      <Card className="w-[450px] p-8">
+        <CardTitle className="text-left">Create Your Fin Account</CardTitle>
         <p className="text-sm mt-2">
-          Don&apos;t have an account?{" "}
-          <Link className="text-blue-600 font-medium underline" href="/signup">
-            Sign up
+          Already have an account?{" "}
+          <Link className="text-blue-600 font-medium underline" href="/login">
+            Login
           </Link>
         </p>
         <form className="mt-8 flex flex-col space-y-8">
+          <div>
+            <Label htmlFor="name">Display Name</Label>
+            <Input name="name" type="text" placeholder="Paris" required />
+          </div>
           <div>
             <Label htmlFor="email">Email</Label>
             <Input
@@ -64,9 +72,9 @@ export default async function LoginPage({
           <Button
             className="w-full mt-4"
             type="submit"
-            formAction={handleSignIn}
+            formAction={handleSignUp}
           >
-            Sign In
+            Create Account
           </Button>
         </form>
         {"error" in searchParams ? (
