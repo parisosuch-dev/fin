@@ -26,6 +26,9 @@ export default async function LoginPage({
     });
 
     if (error) {
+      if (error.message === "Email not confirmed") {
+        redirect("/verify");
+      }
       encodedRedirect("error", "/login", error.message);
     }
 
