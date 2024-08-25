@@ -5,16 +5,23 @@ import { Label } from "@/components/ui/label";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { FormEvent } from "react";
 
 export default async function LoginPage() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    redirect("/");
+  }
+
   const handleSignIn = async (formData: FormData) => {
     "use server";
 
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-
-    const supabase = createClient();
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
