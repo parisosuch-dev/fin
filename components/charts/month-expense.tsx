@@ -22,7 +22,7 @@ export default function MonthExpenseChart({
   // TODO: get expenses for month and display in pie chart
 
   return (
-    <Card className="w-full p-4 sm:p-16">
+    <Card className="w-full p-4 sm:px-16 sm:py-8">
       <CardTitle className="text-center">{monthName} Expenses</CardTitle>
       <div className="flex flex-col items-center mt-2 space-y-4">
         <p className="text-center bg-gray-100 rounded-full px-2 w-fit text-xs sm:text-sm">
