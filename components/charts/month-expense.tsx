@@ -16,6 +16,8 @@ export default function MonthExpenseChart({
 
   const data: any[] = [];
 
+  // TODO: get expenses for month and display in pie chart
+
   return (
     <Card className="w-full p-4 sm:p-16">
       <CardTitle className="text-center">{monthName} Expenses</CardTitle>
