@@ -2,6 +2,9 @@ import { DollarSign } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardTitle } from "../ui/card";
 
+import { redirect } from "next/navigation";
+import Link from "next/link";
+
 export default function MonthExpenseChart({
   month,
   year,
@@ -35,7 +38,9 @@ export default function MonthExpenseChart({
             </div>
           ) : null}
         </div>
-        <Button className="w-full">Add Expense</Button>
+        <Link className="w-full" href="/expense">
+          <Button className="w-full">Add Expense</Button>
+        </Link>
       </div>
     </Card>
   );
