@@ -23,9 +23,9 @@ export default function MonthExpenseChart({
         <p className="text-center bg-gray-100 rounded-full px-2 w-fit text-xs sm:text-sm">
           {firstOfMonth.toDateString()} - {lastOfMonth.toDateString()}
         </p>
-        <div className="min-h-[200px] flex flex-col">
+        <div className="min-h-[400px] flex flex-col">
           {data.length === 0 ? (
-            <div className="flex flex-1 flex-col items-center justify-around bg-gray-50 rounded-lg p-4">
+            <div className="flex flex-1 flex-col items-center justify-center bg-gray-50 rounded-lg p-4 space-y-4">
               <DollarSign size={64} color="gray" />
               <p className="text-center">
                 You have no expenses recorded this month.
