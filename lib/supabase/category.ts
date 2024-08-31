@@ -8,8 +8,6 @@ export async function getCategories(): Promise<Category[]> {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user?.id);
-
   if (!user) {
     throw new Error("User session does not exist.");
   }
