@@ -1,5 +1,6 @@
 import MonthExpenseChart from "@/components/charts/month-expense";
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const supabase = createClient();
@@ -7,6 +8,14 @@ export default async function Home() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  // get user categories and if none exists, force them to add one before even adding expenses
+  // TODO: get user categories
+  const categories: any[] = [];
+
+  if (categories.length === 0) {
+    redirect("/categories");
+  }
 
   const date = new Date();
 
