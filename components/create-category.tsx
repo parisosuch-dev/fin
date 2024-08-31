@@ -12,9 +12,10 @@ import {
 import { getBuckets } from "@/lib/supabase/bucket";
 
 export default async function CreateCategory() {
-  const handleSubmit = async () => {
+  const handleSubmit = async (formData: FormData) => {
     "use server";
-    // TODO: create category
+
+    const bucket = formData.get("");
   };
 
   // get buckets
@@ -44,7 +45,7 @@ export default async function CreateCategory() {
           required
         />
         <Button className="w-full mt-4" type="submit" formAction={handleSubmit}>
-          Sign In
+          Create
         </Button>
       </form>
     </Card>
