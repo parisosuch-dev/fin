@@ -1,4 +1,4 @@
-import { createClient } from "./client";
+import { createClient } from "./server";
 import { Bucket } from "./models";
 
 const supabase = createClient();
