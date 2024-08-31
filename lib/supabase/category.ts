@@ -24,3 +24,38 @@ export async function getCategories(): Promise<Category[]> {
 
   return categories as Category[];
 }
+
+export async function createCategory(
+  bucket: string,
+  name: string,
+  description: string
+): Promise<Category> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User session does not exist.");
+  }
+
+  const { data: category, error } = await supabase
+    .from("Category")
+    .insert([
+      {
+        id: user.id,
+        name: name,
+        description: description,
+        bucket: bucket,
+      },
+    ])
+    .single();
+
+  if (error) {
+    throw new Error(`Error creating category: ${error.message}`);
+  }
+  if (!category) {
+    throw new Error("Unkown error happened when creating category.");
+  }
+
+  return category as Category;
+}
