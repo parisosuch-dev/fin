@@ -36,7 +36,7 @@ export default async function LoginPage({
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
+    <div className="flex flex-1 flex-col items-center justify-center">
       <Card className="w-[450px]   p-8">
         <CardTitle className="text-left">Login to Fin</CardTitle>
         <p className="text-sm mt-2">
