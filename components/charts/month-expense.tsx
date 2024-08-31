@@ -14,10 +14,10 @@ export default function MonthExpenseChart({
   const monthName = firstOfMonth.toLocaleString("default", { month: "long" });
 
   return (
-    <Card className="w-full p-16">
+    <Card className="w-full p-4 sm:p-16">
       <CardTitle className="text-center">{monthName} Expenses</CardTitle>
       <div className="flex flex-col items-center mt-2 space-y-4">
-        <p className="text-center bg-gray-100 rounded-full px-2 w-fit text-sm">
+        <p className="text-center bg-gray-100 rounded-full px-2 w-fit text-xs sm:text-sm">
           {firstOfMonth.toDateString()} - {lastOfMonth.toDateString()}
         </p>
         <div>{/* Chart here */}</div>

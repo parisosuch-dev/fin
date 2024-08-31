@@ -13,9 +13,9 @@ export default async function Nav() {
 
   return (
     <div className="w-full flex flex-row justify-between">
-      <p className="text-xl font-black">fin [enter logo here]</p>
+      <p className="text-sm sm:text-xl font-black">fin [enter logo here]</p>
       <div className="flex flex-row items-center space-x-4">
-        <p>
+        <p className="text-sm sm:text-base">
           Welcome,{" "}
           <span className="font-bold">{user?.user_metadata.display_name}</span>.
         </p>
