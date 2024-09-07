@@ -67,7 +67,7 @@ export default async function ExpensePage() {
           <CardTitle className="text-center">Add Expense</CardTitle>
           <form className="mt-8 flex flex-col space-y-2">
             <div className="flex flex-row space-x-1">
-              <Input name="amount" type="number" placeholder="$" required />
+              <Input name="amount" type="float" placeholder="$" required />
               <DatePicker name="date" value={new Date()} />
             </div>
             <Select name="category">

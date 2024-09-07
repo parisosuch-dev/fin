@@ -58,7 +58,7 @@ export default async function MonthExpenseChart({
         <p className="text-center bg-gray-100 rounded-full px-2 w-fit text-xs sm:text-sm">
           {firstOfMonth.toDateString()} - {lastOfMonth.toDateString()}
         </p>
-        <div className="min-h-[400px] flex flex-col">
+        <div className="min-h-[300px] flex flex-col">
           {transactions.length === 0 ? (
             <div className="flex flex-1 flex-col items-center justify-center bg-gray-50 rounded-lg p-4 space-y-4">
               <DollarSign size={64} color="gray" />
@@ -67,7 +67,18 @@ export default async function MonthExpenseChart({
               </p>
             </div>
           ) : (
-            <DonutChart data={data} category="name" value="amount" showLabel />
+            <div className="w-full flex-1 flex flex-col items-center justify-center">
+              <DonutChart
+                data={data}
+                category="name"
+                value="amount"
+                showLabel
+                className="mx-auto"
+              />
+              <p className="mt-2 text-sm font-light">
+                Total spent for current month
+              </p>
+            </div>
           )}
         </div>
         <Link className="w-full" href="/expense">
