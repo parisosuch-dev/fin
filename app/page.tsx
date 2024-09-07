@@ -11,7 +11,6 @@ export default async function Home() {
   } = await supabase.auth.getUser();
 
   // get user categories and if none exists, force them to add one before even adding expenses
-  // TODO: get user categories
   const categories = await getCategories();
 
   if (categories.length === 0) {
