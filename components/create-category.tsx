@@ -10,12 +10,19 @@ import {
 } from "@/components/ui/select";
 
 import { getBuckets } from "@/lib/supabase/bucket";
+import { createCategory } from "@/lib/supabase/category";
 
 export default async function CreateCategory() {
   const handleSubmit = async (formData: FormData) => {
     "use server";
 
-    const bucket = formData.get("");
+    const bucket = formData.get("bucket") as string;
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+
+    const result = await createCategory(bucket, name, description);
+
+    // TODO: handle error on category creation and display that error to user
   };
 
   // get buckets
@@ -25,7 +32,7 @@ export default async function CreateCategory() {
     <Card className="w-full sm:w-1/4 p-4 sm:px-16 sm:py-8 text-center">
       <CardTitle>Add Your First Category</CardTitle>
       <form className="mt-8 flex flex-col space-y-2">
-        <Select>
+        <Select name="bucket" required>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Bucket" />
           </SelectTrigger>

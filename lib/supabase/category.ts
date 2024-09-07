@@ -42,13 +42,13 @@ export async function createCategory(
     .from("Category")
     .insert([
       {
-        id: user.id,
+        user_id: user.id,
         name: name,
         description: description,
         bucket: bucket,
       },
     ])
-    .single();
+    .select();
 
   if (error) {
     throw new Error(`Error creating category: ${error.message}`);
@@ -57,5 +57,5 @@ export async function createCategory(
     throw new Error("Unkown error happened when creating category.");
   }
 
-  return category as Category;
+  return category[0] as Category;
 }
