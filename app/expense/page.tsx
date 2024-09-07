@@ -14,13 +14,26 @@ import {
 } from "@/components/ui/select";
 import { redirect } from "next/navigation";
 import { getCategories } from "@/lib/supabase/category";
-import { getBuckets } from "@/lib/supabase/bucket";
 import { Category } from "@/lib/supabase/models";
 
 export default async function ExpensePage() {
-  const handleSubmit = async () => {
+  const handleSubmit = async (formData: FormData) => {
     "use server";
     // TODO: submit expense
+
+    const amount = formData.get("amount");
+    const date = formData.get("date");
+    const category = formData.get("category");
+    const name = formData.get("name");
+    const comment = formData.get("comment");
+
+    console.log({
+      amount,
+      date,
+      category,
+      name,
+      comment,
+    });
   };
 
   const categories = await getCategories();
@@ -28,8 +41,6 @@ export default async function ExpensePage() {
   if (categories.length === 0) {
     redirect("/categories");
   }
-
-  const buckets = await getBuckets();
 
   type BucketCategoriesMap = {
     [key: string]: Category[];
@@ -53,7 +64,7 @@ export default async function ExpensePage() {
           <form className="mt-8 flex flex-col space-y-2">
             <div className="flex flex-row space-x-1">
               <Input name="amount" type="number" placeholder="$" required />
-              <DatePicker />
+              <DatePicker name="date" value={new Date()} />
             </div>
             <Select name="category">
               <SelectTrigger className="w-full">
@@ -64,7 +75,9 @@ export default async function ExpensePage() {
                   <SelectGroup key={bucket}>
                     <SelectLabel>{bucket}</SelectLabel>
                     {items.map((item) => (
-                      <SelectItem value={item.name}>{item.name}</SelectItem>
+                      <SelectItem value={item.name} key={item.name}>
+                        {item.name}
+                      </SelectItem>
                     ))}
                   </SelectGroup>
                 ))}
