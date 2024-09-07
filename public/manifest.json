@@ -1,7 +1,7 @@
 {
   "name": "Fin",
   "short_name": "fin",
-  "theme_color": "#81DAE3",
+  "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "any",
