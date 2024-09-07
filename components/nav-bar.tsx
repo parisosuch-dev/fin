@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 
 export default async function Nav() {
   const supabase = createClient();
@@ -13,7 +14,9 @@ export default async function Nav() {
 
   return (
     <div className="w-full flex flex-row justify-between">
-      <p className="text-sm sm:text-xl font-black">fin [enter logo here]</p>
+      <Link className="text-sm sm:text-xl font-black" href="/">
+        fin [enter logo here]
+      </Link>
       <div className="flex flex-row items-center space-x-4">
         <p className="text-sm sm:text-base">
           Welcome,{" "}
