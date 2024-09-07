@@ -1,5 +1,3 @@
-"use client";
-
 import { Card, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,14 +13,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { redirect } from "next/navigation";
+import { getCategories } from "@/lib/supabase/category";
 
-export default function ExpensePage() {
-  const handleSubmit = () => {
+export default async function ExpensePage() {
+  const handleSubmit = async () => {
+    "use server";
     // TODO: submit expense
   };
 
-  // TODO: get categories to select from
-  const categories: any[] = [];
+  const categories = await getCategories();
 
   if (categories.length === 0) {
     redirect("/categories");
