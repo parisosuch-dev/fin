@@ -20,17 +20,17 @@ export default async function CategoriesPage() {
 
   return (
     <div className="flex flex-1 flex-col items-center w-full mt-16">
-      <div className="w-1/4">
+      <div className="w-full sm:w-1/4">
         <h1 className="text-4xl font-bold">Categories</h1>
       </div>
-      <div className="w-1/4 mt-8 mb-2 flex flex-row justify-end">
+      <div className="w-full sm:w-1/4 mt-8 mb-2 flex flex-row justify-end">
         <Button variant="secondary">
           <Link href="/categories/add">
             <CirclePlusIcon color="gray" />
           </Link>
         </Button>
       </div>
-      <div className="w-1/4 space-y-2">
+      <div className="w-full sm:w-1/4 space-y-2">
         {categories.map((category) => (
           <Card className="w-full p-4 space-y-2" key={category.name}>
             <div className="flex flex-row items-center space-x-4">
