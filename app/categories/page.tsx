@@ -19,14 +19,6 @@ export default async function CategoriesPage() {
     );
   }
 
-  const handleAdd = async () => {
-    "use server";
-
-    console.log("hello");
-
-    redirect("/categories/add");
-  };
-
   return (
     <div className="flex flex-1 flex-col items-center w-full mt-16">
       <div className="w-1/4">
