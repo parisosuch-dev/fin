@@ -15,25 +15,25 @@ import {
 import { redirect } from "next/navigation";
 import { getCategories } from "@/lib/supabase/category";
 import { Category } from "@/lib/supabase/models";
+import { addTransaction } from "@/lib/supabase/expense";
 
 export default async function ExpensePage() {
   const handleSubmit = async (formData: FormData) => {
     "use server";
-    // TODO: submit expense
 
-    const amount = formData.get("amount");
-    const date = formData.get("date");
-    const category = formData.get("category");
-    const name = formData.get("name");
-    const comment = formData.get("comment");
+    const amount = parseFloat(formData.get("amount") as string);
+    const date = new Date(formData.get("date") as string);
+    const category_id = parseInt(formData.get("category") as string);
+    const name = formData.get("name") as string;
+    const comment = formData.get("comment") as string | undefined;
 
-    console.log({
+    const transaction = await addTransaction(
       amount,
       date,
-      category,
+      category_id,
       name,
-      comment,
-    });
+      comment
+    );
   };
 
   const categories = await getCategories();
@@ -75,7 +75,7 @@ export default async function ExpensePage() {
                   <SelectGroup key={bucket}>
                     <SelectLabel>{bucket}</SelectLabel>
                     {items.map((item) => (
-                      <SelectItem value={item.name} key={item.name}>
+                      <SelectItem value={item.id.toString()} key={item.id}>
                         {item.name}
                       </SelectItem>
                     ))}

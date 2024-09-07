@@ -6,7 +6,7 @@ const supabase = createClient();
 export async function addTransaction(
   amount: number,
   date: Date,
-  category: string,
+  category_id: number,
   name: string,
   comment?: string
 ): Promise<Transaction> {
@@ -19,14 +19,14 @@ export async function addTransaction(
   }
 
   const { data: transaction, error } = await supabase
-    .from("Category")
+    .from("Transaction")
     .insert([
       {
         user_id: user.id,
         name: name,
         amount: amount,
         date: date,
-        category: category,
+        category_id: category_id,
         comment: comment,
       },
     ])
