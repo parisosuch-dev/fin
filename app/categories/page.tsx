@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { getCategories } from "@/lib/supabase/category";
-import { redirect } from "next/navigation";
 
 import { CirclePlusIcon } from "lucide-react";
 import Link from "next/link";
