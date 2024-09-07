@@ -41,3 +41,28 @@ export async function addTransaction(
 
   return transaction[0] as Transaction;
 }
+
+export async function getTransactionBetweenDates(
+  start_date: Date,
+  end_date: Date
+): Promise<Transaction[]> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User session does not exist.");
+  }
+
+  const { data: transactions, error } = await supabase
+    .from("Transaction")
+    .select()
+    .gte("date", start_date)
+    .lte("date", end_date);
+
+  if (error) {
+    throw new Error(`Error creating transaction: ${error.message}`);
+  }
+
+  return transactions as Transaction[];
+}
