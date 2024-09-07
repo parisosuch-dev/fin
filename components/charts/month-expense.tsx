@@ -1,11 +1,12 @@
 import { DollarSign } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardTitle } from "../ui/card";
-
-import { redirect } from "next/navigation";
 import Link from "next/link";
+import { getTransactionBetweenDates } from "@/lib/supabase/expense";
+import { DonutChart } from "./donut-chart";
+import { getCategories } from "@/lib/supabase/category";
 
-export default function MonthExpenseChart({
+export default async function MonthExpenseChart({
   month,
   year,
 }: {
@@ -17,9 +18,38 @@ export default function MonthExpenseChart({
   const lastOfMonth = new Date(year, month + 1, 0);
   const monthName = firstOfMonth.toLocaleString("default", { month: "long" });
 
-  const data: any[] = [];
+  const transactions = await getTransactionBetweenDates(
+    firstOfMonth,
+    lastOfMonth
+  );
 
-  // TODO: get expenses for month and display in pie chart
+  // get categories and map category id to a respective name for lookup
+  const categories = await getCategories();
+  const categoryMap: { [key: number]: string } = {};
+  for (let category of categories) {
+    categoryMap[category.id] = category.name;
+  }
+
+  const aggregateData: { [key: string]: number } = {};
+
+  transactions.forEach((transaction) => {
+    // get the category name using the map
+    let categoryName = categoryMap[transaction.category_id];
+    if (aggregateData[categoryName]) {
+      aggregateData[categoryName] += transaction.amount;
+    } else {
+      aggregateData[categoryName] = transaction.amount;
+    }
+  });
+
+  // convert to a suitable array
+
+  const data = Object.keys(aggregateData).map((name) => ({
+    name,
+    amount: aggregateData[name],
+  }));
+
+  console.log(data);
 
   return (
     <Card className="w-full p-4 sm:px-16 sm:py-8">
@@ -29,14 +59,16 @@ export default function MonthExpenseChart({
           {firstOfMonth.toDateString()} - {lastOfMonth.toDateString()}
         </p>
         <div className="min-h-[400px] flex flex-col">
-          {data.length === 0 ? (
+          {transactions.length === 0 ? (
             <div className="flex flex-1 flex-col items-center justify-center bg-gray-50 rounded-lg p-4 space-y-4">
               <DollarSign size={64} color="gray" />
               <p className="text-center">
                 You have no expenses recorded this month.
               </p>
             </div>
-          ) : null}
+          ) : (
+            <DonutChart data={data} category="name" value="amount" showLabel />
+          )}
         </div>
         <Link className="w-full" href="/expense">
           <Button className="w-full">Add Expense</Button>

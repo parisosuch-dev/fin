@@ -57,11 +57,12 @@ export async function getTransactionBetweenDates(
   const { data: transactions, error } = await supabase
     .from("Transaction")
     .select()
-    .gte("date", start_date)
-    .lte("date", end_date);
+    .eq("user_id", user.id)
+    .gte("date", start_date.toISOString())
+    .lte("date", end_date.toISOString());
 
   if (error) {
-    throw new Error(`Error creating transaction: ${error.message}`);
+    throw new Error(`Error getting transaction: ${error.message}`);
   }
 
   return transactions as Transaction[];
