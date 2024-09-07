@@ -34,6 +34,10 @@ export default async function ExpensePage() {
       name,
       comment
     );
+
+    if (transaction) {
+      redirect("/");
+    }
   };
 
   const categories = await getCategories();
