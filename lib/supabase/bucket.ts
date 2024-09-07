@@ -1,9 +1,9 @@
 import { createClient } from "./server";
 import { Bucket } from "./models";
 
-const supabase = createClient();
-
 export async function getBuckets(): Promise<Bucket[]> {
+  const supabase = createClient();
+
   const {
     data: { user },
   } = await supabase.auth.getUser();

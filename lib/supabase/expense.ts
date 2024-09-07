@@ -1,8 +1,6 @@
 import { Transaction } from "./models";
 import { createClient } from "./server";
 
-const supabase = createClient();
-
 export async function addTransaction(
   amount: number,
   date: Date,
@@ -10,6 +8,8 @@ export async function addTransaction(
   name: string,
   comment?: string
 ): Promise<Transaction> {
+  const supabase = createClient();
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -46,6 +46,8 @@ export async function getTransactionBetweenDates(
   start_date: Date,
   end_date: Date
 ): Promise<Transaction[]> {
+  const supabase = createClient();
+
   const {
     data: { user },
   } = await supabase.auth.getUser();

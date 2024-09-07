@@ -49,8 +49,6 @@ export default async function MonthExpenseChart({
     amount: aggregateData[name],
   }));
 
-  console.log(data);
-
   return (
     <Card className="w-full p-4 sm:px-16 sm:py-8">
       <CardTitle className="text-center">{monthName} Expenses</CardTitle>
