@@ -13,7 +13,6 @@ import {
 
 import { getBuckets } from "@/lib/supabase/bucket";
 import { createCategory } from "@/lib/supabase/category";
-import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -44,6 +43,12 @@ export default function CreateCategory() {
       });
   };
 
+  const maxLengthCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value.length > event.target.maxLength) {
+      event.target.value = event.target.value.slice(0, event.target.maxLength);
+    }
+  };
+
   useEffect(() => {
     // get buckets
     getBuckets(supabase).then((res) => {
@@ -70,11 +75,20 @@ export default function CreateCategory() {
             ))}
           </SelectContent>
         </Select>
-        <Input name="name" type="text" placeholder="category name" required />
+        <Input
+          name="name"
+          type="text"
+          placeholder="category name"
+          required
+          maxLength={48}
+          onInput={maxLengthCheck}
+        />
         <Input
           name="description"
           type="text"
           placeholder="description"
+          maxLength={56}
+          onInput={maxLengthCheck}
           required
         />
         <div className="flex flex-row space-x-1 mt-4">
