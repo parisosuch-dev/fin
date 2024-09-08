@@ -6,9 +6,12 @@ import { getCategories } from "@/lib/supabase/category";
 
 import { CirclePlusIcon } from "lucide-react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function CategoriesPage() {
-  const categories = await getCategories();
+  const supabase = createClient();
+
+  const categories = await getCategories(supabase);
 
   if (categories.length === 0) {
     return (
