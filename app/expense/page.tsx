@@ -93,7 +93,7 @@ export default function ExpensePage() {
             <Input
               name="name"
               type="text"
-              placeholder="Transaction name*"
+              placeholder="Transaction name"
               required
             />
             <Textarea name="comment" placeholder="Comment (optional)" />
