@@ -12,8 +12,11 @@ import {
 import { getBuckets } from "@/lib/supabase/bucket";
 import { createCategory } from "@/lib/supabase/category";
 import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function CreateCategory() {
+  const supabase = createClient();
+
   const handleSubmit = async (formData: FormData) => {
     "use server";
 
@@ -21,7 +24,7 @@ export default async function CreateCategory() {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
 
-    const result = await createCategory(bucket, name, description);
+    const result = await createCategory(supabase, bucket, name, description);
 
     // based on the result if success, go to categories page
     redirect("/categories");
@@ -30,7 +33,7 @@ export default async function CreateCategory() {
   };
 
   // get buckets
-  const buckets = await getBuckets();
+  const buckets = await getBuckets(supabase);
 
   return (
     <Card className="w-full sm:w-1/4 p-4 sm:px-16 sm:py-8 text-center">
