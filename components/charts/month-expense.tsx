@@ -72,11 +72,10 @@ export default async function MonthExpenseChart({
                 category="name"
                 value="amount"
                 showLabel
-                className="mx-auto"
+                className="mx-auto h-[256px]"
               />
-              <p className="mt-2 text-sm font-light">
-                Total spent for current month
-              </p>
+              <p className="mt-2 font-light">Total spent for current month</p>
+              {/* TODO: Add percentage up or down from previous month*/}
             </div>
           )}
         </div>
