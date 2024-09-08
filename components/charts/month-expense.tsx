@@ -1,7 +1,5 @@
 import { DollarSign } from "lucide-react";
-import { Button } from "../ui/button";
 import { Card, CardTitle } from "../ui/card";
-import Link from "next/link";
 import { getTransactionBetweenDates } from "@/lib/supabase/expense";
 import { DonutChart } from "./donut-chart";
 import { getCategories } from "@/lib/supabase/category";
@@ -82,9 +80,6 @@ export default async function MonthExpenseChart({
             </div>
           )}
         </div>
-        <Link className="w-full" href="/expense">
-          <Button className="w-full">Add Expense</Button>
-        </Link>
       </div>
     </Card>
   );
