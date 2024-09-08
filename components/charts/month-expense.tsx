@@ -49,7 +49,7 @@ export default async function MonthExpenseChart({
 
   const data = Object.keys(aggregateData).map((name) => ({
     name,
-    amount: aggregateData[name],
+    amount: parseFloat(aggregateData[name].toFixed(2)),
   }));
 
   return (
