@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { getCategories } from "@/lib/supabase/category";
 
-import { CirclePlusIcon } from "lucide-react";
+import { CirclePlusIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 
@@ -27,19 +27,34 @@ export default async function CategoriesPage() {
         <h1 className="text-4xl font-bold">Categories</h1>
       </div>
       <div className="w-full sm:w-1/4 mt-8 mb-2 flex flex-row justify-end">
-        <Button variant="secondary">
+        <Button variant="secondary" className="group">
           <Link href="/categories/add">
-            <CirclePlusIcon color="gray" />
+            <CirclePlusIcon
+              color="gray"
+              className="group-hover:scale-90 transform duration-300"
+            />
           </Link>
         </Button>
       </div>
       <div className="w-full sm:w-1/4 space-y-2">
         {categories.map((category) => (
           <Card className="w-full p-4 space-y-2" key={category.name}>
-            <div className="flex flex-row items-center space-x-4">
+            <div className="flex flex-row justify-between">
               <CardTitle>{category.name}</CardTitle>
-              <Badge variant="outline">{category.bucket}</Badge>
+              <div className="">
+                <Link
+                  href={`/categories/delete?category=${category.name}`}
+                  className="group"
+                >
+                  <Trash2Icon
+                    color="gray"
+                    size={18}
+                    className="group-hover:scale-90 transform duration-300"
+                  />
+                </Link>
+              </div>
             </div>
+            <Badge variant="outline">{category.bucket}</Badge>
             <p className="text-sm font-light">{category.description}</p>
           </Card>
         ))}
