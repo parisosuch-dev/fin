@@ -97,14 +97,24 @@ export default function ExpensePage() {
               required
             />
             <Textarea name="comment" placeholder="Comment (optional)" />
-            <Button
-              className="w-full mt-4"
-              type="submit"
-              formAction={handleSubmit}
-              disabled={disableButton}
-            >
-              Submit
-            </Button>
+            <div className="flex flex-row mt-4 space-x-1">
+              <Button
+                variant="outline"
+                className="w-1/2"
+                type="button"
+                onClick={() => router.back()}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="w-1/2"
+                type="submit"
+                formAction={handleSubmit}
+                disabled={disableButton}
+              >
+                Submit
+              </Button>
+            </div>
           </form>
         </Card>
       </div>
