@@ -253,7 +253,7 @@ const DonutChart = React.forwardRef<HTMLDivElement, DonutChartProps>(
                 textAnchor="middle"
                 dominantBaseline="middle"
               >
-                {`$${parsedLabelInput}`}
+                {`$${new Number(parsedLabelInput).toFixed(2)}`}
               </text>
             )}
             <Pie
