@@ -1,6 +1,5 @@
 "use client";
 
-import CreateCategory from "@/components/create-category";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
