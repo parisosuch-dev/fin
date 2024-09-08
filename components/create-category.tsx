@@ -1,5 +1,7 @@
+"use client";
+
 import { Card, CardTitle } from "./ui/card";
-import { Button, buttonVariants } from "./ui/button";
+import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
   Select,
@@ -12,29 +14,42 @@ import {
 import { getBuckets } from "@/lib/supabase/bucket";
 import { createCategory } from "@/lib/supabase/category";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Bucket } from "@/lib/supabase/models";
+import { useRouter } from "next/navigation";
 
-export default async function CreateCategory() {
+export default function CreateCategory() {
+  const [buckets, setBuckets] = useState<Bucket[]>([]);
+  const [disableButton, setDisableButton] = useState(false);
   const supabase = createClient();
+  const router = useRouter();
 
-  const handleSubmit = async (formData: FormData) => {
-    "use server";
+  const handleSubmit = (formData: FormData) => {
+    setDisableButton(true);
 
     const bucket = formData.get("bucket") as string;
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
 
-    const result = await createCategory(supabase, bucket, name, description);
-
-    // based on the result if success, go to categories page
-    redirect("/categories");
-
-    // TODO: handle error on category creation and display that error to user
+    createCategory(supabase, bucket, name, description)
+      .then((res) => {
+        // based on the result if success, go to categories page
+        router.push("/categories");
+      })
+      .catch((e) => {
+        setDisableButton(false);
+        // TODO: handle error on category creation and display that error to user
+      });
   };
 
-  // get buckets
-  const buckets = await getBuckets(supabase);
+  useEffect(() => {
+    // get buckets
+    getBuckets(supabase).then((res) => {
+      setBuckets(res);
+    });
+  }, []);
 
   return (
     <Card className="w-full sm:w-1/4 p-4 sm:px-16 sm:py-8 text-center">
@@ -69,7 +84,12 @@ export default async function CreateCategory() {
           >
             Cancel
           </Link>
-          <Button className="w-1/2" type="submit" formAction={handleSubmit}>
+          <Button
+            className="w-1/2"
+            type="submit"
+            formAction={handleSubmit}
+            disabled={disableButton}
+          >
             Create
           </Button>
         </div>
