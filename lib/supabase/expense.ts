@@ -1,15 +1,14 @@
+import { SupabaseClient } from "@supabase/supabase-js";
 import { Transaction } from "./models";
-import { createClient } from "./server";
 
 export async function addTransaction(
+  supabase: SupabaseClient,
   amount: number,
   date: Date,
   category_id: number,
   name: string,
   comment?: string
 ): Promise<Transaction> {
-  const supabase = createClient();
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -43,11 +42,10 @@ export async function addTransaction(
 }
 
 export async function getTransactionBetweenDates(
+  supabase: SupabaseClient,
   start_date: Date,
   end_date: Date
 ): Promise<Transaction[]> {
-  const supabase = createClient();
-
   const {
     data: { user },
   } = await supabase.auth.getUser();

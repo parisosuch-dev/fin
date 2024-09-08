@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getTransactionBetweenDates } from "@/lib/supabase/expense";
 import { DonutChart } from "./donut-chart";
 import { getCategories } from "@/lib/supabase/category";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function MonthExpenseChart({
   month,
@@ -13,18 +14,20 @@ export default async function MonthExpenseChart({
   month: number;
   year: number;
 }) {
+  const supabase = await createClient();
   // date stuff
   const firstOfMonth = new Date(year, month, 1);
   const lastOfMonth = new Date(year, month + 1, 0);
   const monthName = firstOfMonth.toLocaleString("default", { month: "long" });
 
   const transactions = await getTransactionBetweenDates(
+    supabase,
     firstOfMonth,
     lastOfMonth
   );
 
   // get categories and map category id to a respective name for lookup
-  const categories = await getCategories();
+  const categories = await getCategories(supabase);
   const categoryMap: { [key: number]: string } = {};
   for (let category of categories) {
     categoryMap[category.id] = category.name;

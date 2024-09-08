@@ -1,9 +1,9 @@
+import { SupabaseClient } from "@supabase/supabase-js";
 import { Category } from "./models";
-import { createClient } from "./server";
 
-export async function getCategories(): Promise<Category[]> {
-  const supabase = createClient();
-
+export async function getCategories(
+  supabase: SupabaseClient
+): Promise<Category[]> {
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -26,12 +26,11 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 export async function createCategory(
+  supabase: SupabaseClient,
   bucket: string,
   name: string,
   description: string
 ): Promise<Category> {
-  const supabase = createClient();
-
   const {
     data: { user },
   } = await supabase.auth.getUser();

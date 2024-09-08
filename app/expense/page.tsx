@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,14 +14,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { redirect } from "next/navigation";
 import { getCategories } from "@/lib/supabase/category";
-import { Category } from "@/lib/supabase/models";
 import { addTransaction } from "@/lib/supabase/expense";
+import { Category } from "@/lib/supabase/models";
 
-export default async function ExpensePage() {
-  const handleSubmit = async (formData: FormData) => {
-    "use server";
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+
+export default function ExpensePage() {
+  const [categoriesByBucket, setCategoriesByBucket] = useState<
+    { [key: string]: Category[] } | {}
+  >({});
+  const [disableButton, setDisableButton] = useState(false);
+  const router = useRouter();
+  const supabase = createClient();
+
+  const handleSubmit = (formData: FormData) => {
+    setDisableButton(true);
 
     const amount = parseFloat(formData.get("amount") as string);
     const date = new Date(formData.get("date") as string);
@@ -27,38 +39,29 @@ export default async function ExpensePage() {
     const name = formData.get("name") as string;
     const comment = formData.get("comment") as string | undefined;
 
-    const transaction = await addTransaction(
-      amount,
-      date,
-      category_id,
-      name,
-      comment
+    addTransaction(supabase, amount, date, category_id, name, comment).then(
+      (res) => {
+        if (res) {
+          router.push("/");
+        }
+        setDisableButton(false);
+      }
     );
-
-    if (transaction) {
-      redirect("/");
-    }
   };
 
-  const categories = await getCategories();
-
-  if (categories.length === 0) {
-    redirect("/categories");
-  }
-
-  type BucketCategoriesMap = {
-    [key: string]: Category[];
-  };
-
-  const categoriesByBucket: BucketCategoriesMap = {};
-
-  // filter each category into a bucket so we can group them
-  for (let category of categories) {
-    if (!(category.bucket in categoriesByBucket)) {
-      categoriesByBucket[category.bucket] = [];
-    }
-    categoriesByBucket[category.bucket].push(category);
-  }
+  useEffect(() => {
+    getCategories(supabase).then((res) => {
+      // filter each category into a bucket so we can group them
+      let tempCBB: { [key: string]: Category[] } = {};
+      for (let category of res) {
+        if (!(category.bucket in tempCBB)) {
+          tempCBB[category.bucket] = [];
+        }
+        tempCBB[category.bucket].push(category);
+      }
+      setCategoriesByBucket(tempCBB);
+    });
+  }, []);
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center w-full">
@@ -98,6 +101,7 @@ export default async function ExpensePage() {
               className="w-full mt-4"
               type="submit"
               formAction={handleSubmit}
+              disabled={disableButton}
             >
               Submit
             </Button>
