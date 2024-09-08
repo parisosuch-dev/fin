@@ -1,5 +1,5 @@
 import { Card, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { Input } from "./ui/input";
 import {
   Select,
@@ -63,10 +63,11 @@ export default async function CreateCategory() {
           required
         />
         <div className="flex flex-row space-x-1 mt-4">
-          <Link className="w-1/2" href="/categories">
-            <Button className="w-full" variant="outline">
-              Cancel
-            </Button>
+          <Link
+            className="w-1/2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground"
+            href="/categories"
+          >
+            Cancel
           </Link>
           <Button className="w-1/2" type="submit" formAction={handleSubmit}>
             Create
