@@ -93,10 +93,10 @@ export default function ExpensePage() {
             <Input
               name="name"
               type="text"
-              placeholder="transaction name"
+              placeholder="Transaction name*"
               required
             />
-            <Textarea name="comment" placeholder="comment" />
+            <Textarea name="comment" placeholder="Comment (optional)" />
             <Button
               className="w-full mt-4"
               type="submit"
