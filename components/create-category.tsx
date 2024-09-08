@@ -13,6 +13,7 @@ import { getBuckets } from "@/lib/supabase/bucket";
 import { createCategory } from "@/lib/supabase/category";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 
 export default async function CreateCategory() {
   const supabase = createClient();
@@ -61,9 +62,16 @@ export default async function CreateCategory() {
           placeholder="description"
           required
         />
-        <Button className="w-full mt-4" type="submit" formAction={handleSubmit}>
-          Create
-        </Button>
+        <div className="flex flex-row space-x-1 mt-4">
+          <Link className="w-1/2" href="/categories">
+            <Button className="w-full" variant="outline">
+              Cancel
+            </Button>
+          </Link>
+          <Button className="w-1/2" type="submit" formAction={handleSubmit}>
+            Create
+          </Button>
+        </div>
       </form>
     </Card>
   );
