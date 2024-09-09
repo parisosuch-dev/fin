@@ -30,6 +30,7 @@ import { CirclePlusIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -48,27 +49,37 @@ export default function CategoriesPage() {
     });
   }, []);
 
-  const MobileDrawer = () => {
+  const deleteCategory = (category: Category) => {
+    // TODO: delete category
+    setOpen(false);
+  };
+
+  const MobileDrawer = ({ category }: { category: Category }) => {
     return (
       <Drawer>
         <DrawerTrigger asChild>
           <Trash2Icon
             color="gray"
             size={18}
-            className="group-hover:scale-90 transform duration-300"
+            className="hover:scale-90 hover:cursor-pointer transform duration-300"
           />
         </DrawerTrigger>
         <DrawerContent>
-          <div className="mx-auto w-full max-w-sm">
+          <div className="w-full">
             <DrawerHeader>
-              <DrawerTitle>Move Goal</DrawerTitle>
+              <DrawerTitle>Delete Category "{category.name}"</DrawerTitle>
               <DrawerDescription>
-                Set your daily activity goal.
+                This will remove categories from some transactions. You will
+                need to go back and change those.
               </DrawerDescription>
             </DrawerHeader>
             <div className="p-4 pb-0"></div>
             <DrawerFooter>
-              <Button>Submit</Button>
+              <DrawerClose asChild>
+                <Button onClick={() => deleteCategory(category)}>
+                  Continue
+                </Button>
+              </DrawerClose>
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DrawerClose>
@@ -79,23 +90,34 @@ export default function CategoriesPage() {
     );
   };
 
-  const DesktopDialog = () => {
+  const DesktopDialog = ({ category }: { category: Category }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Trash2Icon
             color="gray"
             size={18}
-            className="group-hover:scale-90 transform duration-300"
+            className="hover:scale-90 transform duration-300 hover:cursor-pointer"
           />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>Delete Category "{category.name}"</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              This will remove categories from some transactions. You will need
+              to go back and change those.
             </DialogDescription>
           </DialogHeader>
+          <div className="w-full flex flex-row space-x-2">
+            <DialogClose asChild>
+              <Button className="w-1/2" variant="outline">
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button className="w-1/2" onClick={() => deleteCategory(category)}>
+              Continue
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     );
@@ -129,7 +151,11 @@ export default function CategoriesPage() {
             <Card className="w-full p-4 space-y-2" key={category.name}>
               <div className="flex flex-row justify-between">
                 <CardTitle>{category.name}</CardTitle>
-                {isDesktop ? <DesktopDialog /> : <MobileDrawer />}
+                {isDesktop ? (
+                  <DesktopDialog category={category} />
+                ) : (
+                  <MobileDrawer category={category} />
+                )}
               </div>
               <Badge variant="outline">{category.bucket}</Badge>
               <p className="text-sm font-light">{category.description}</p>
