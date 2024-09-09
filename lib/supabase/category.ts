@@ -60,3 +60,26 @@ export async function createCategory(
 
   return category[0] as Category;
 }
+
+export async function deleteCategory(
+  supabase: SupabaseClient,
+  category_id: number
+): Promise<number> {
+  const response = await supabase
+    .from("Category")
+    .delete()
+    .eq("id", category_id);
+
+  console.log(response);
+
+  if (response.error) {
+    throw new Error(response.error.message);
+  }
+
+  if (!response.count) {
+    // TODO: fix whatever this is. why would the count be null, shouldn't it error?
+    return 0;
+  }
+
+  return response.count;
+}
