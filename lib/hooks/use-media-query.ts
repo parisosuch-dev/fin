@@ -1,34 +1,35 @@
-"use client";
-
 import { useEffect, useState } from "react";
 
-// Define the type for the hook's argument
 interface UseMediaQueryProps {
   query: string;
 }
 
 const useMediaQuery = ({ query }: UseMediaQueryProps) => {
-  // Initialize state with the result of the media query
-  const [matches, setMatches] = useState<boolean>(
-    window.matchMedia(query).matches
-  );
+  // State to store the result of the media query
+  const [matches, setMatches] = useState<boolean>(false);
 
   useEffect(() => {
-    // Create a MediaQueryList object
-    const mediaQueryList = window.matchMedia(query);
+    // Check if we're in a browser environment
+    if (typeof window !== "undefined") {
+      // Create a MediaQueryList object
+      const mediaQueryList = window.matchMedia(query);
 
-    // Define a callback function to update the state
-    const handleChange = (event: MediaQueryListEvent) => {
-      setMatches(event.matches);
-    };
+      // Update the state with the initial media query result
+      setMatches(mediaQueryList.matches);
 
-    // Add a listener to handle changes
-    mediaQueryList.addEventListener("change", handleChange);
+      // Define a callback function to update the state
+      const handleChange = (event: MediaQueryListEvent) => {
+        setMatches(event.matches);
+      };
 
-    // Cleanup function to remove the listener
-    return () => {
-      mediaQueryList.removeEventListener("change", handleChange);
-    };
+      // Add a listener to handle changes
+      mediaQueryList.addEventListener("change", handleChange);
+
+      // Cleanup function to remove the listener
+      return () => {
+        mediaQueryList.removeEventListener("change", handleChange);
+      };
+    }
   }, [query]);
 
   return matches;
