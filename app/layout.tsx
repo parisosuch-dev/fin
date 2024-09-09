@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/nav-bar";
+import MobileMenu from "@/components/mobile-menu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,6 +44,7 @@ export default function RootLayout({
       >
         <Nav />
         {children}
+        <MobileMenu />
       </body>
     </html>
   );

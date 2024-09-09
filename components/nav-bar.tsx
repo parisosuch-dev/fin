@@ -6,7 +6,12 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { createClient } from "@/lib/supabase/server";
-import { DollarSignIcon, DoorOpenIcon, PackageIcon } from "lucide-react";
+import {
+  DollarSignIcon,
+  DoorOpenIcon,
+  MenuIcon,
+  PackageIcon,
+} from "lucide-react";
 import Link from "next/link";
 
 export default async function Nav() {
@@ -26,7 +31,7 @@ export default async function Nav() {
         <Link className="text-sm sm:text-xl font-black" href="/">
           fin [enter logo here]
         </Link>
-        <NavigationMenu>
+        <NavigationMenu className="hidden sm:visible">
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link href="/expenses" legacyBehavior passHref>
@@ -51,13 +56,12 @@ export default async function Nav() {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-
-      <div className="flex flex-row items-center space-x-4">
+      <div className="sm:flex flex-row items-center space-x-4">
         <p className="text-sm sm:text-base">
           Welcome,{" "}
           <span className="font-bold">{user?.user_metadata.display_name}</span>.
         </p>
-        <NavigationMenu>
+        <NavigationMenu className="hidden sm:visible">
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link href="/logout" legacyBehavior passHref>

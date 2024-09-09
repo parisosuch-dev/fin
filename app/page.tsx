@@ -13,11 +13,6 @@ export default async function Home() {
           <Link className="w-full" href="/expense">
             <Button className="w-full">Add Expense</Button>
           </Link>
-          <Link className="w-full" href="/expenses">
-            <Button className="w-full mt-2" variant="outline">
-              View Expenses
-            </Button>
-          </Link>
         </div>
       </div>
     </div>
