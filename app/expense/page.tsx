@@ -43,6 +43,7 @@ export default function ExpensePage() {
       (res) => {
         if (res) {
           router.push("/");
+          router.refresh();
         }
         setDisableButton(false);
       }
