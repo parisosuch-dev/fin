@@ -36,6 +36,11 @@ export default async function MonthExpenseChart({
   transactions.forEach((transaction) => {
     // get the category name using the map
     let categoryName = categoryMap[transaction.category_id];
+    // if the categoryName is undefined, set categoryName to None
+    if (categoryName === undefined) {
+      categoryName = "None";
+    }
+
     if (aggregateData[categoryName]) {
       aggregateData[categoryName] += transaction.amount;
     } else {
