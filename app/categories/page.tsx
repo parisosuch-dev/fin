@@ -76,7 +76,9 @@ export default function CategoriesPage() {
         <DrawerContent className="w-full flex flex-col items-center">
           <div className="w-full sm:w-1/4 flex flex-col justify-center">
             <DrawerHeader className="w-full flex flex-col items-center">
-              <DrawerTitle>Delete Category "{category.name}"</DrawerTitle>
+              <DrawerTitle>
+                Delete Category &ldquo;{category.name}&ldquo;
+              </DrawerTitle>
               <DrawerDescription className="text-center">
                 This will remove categories from some transactions. You will
                 need to go back and change those.
