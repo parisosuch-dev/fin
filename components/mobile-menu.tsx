@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Card } from "./ui/card";
-import { DollarSignIcon, PackageIcon } from "lucide-react";
+import { DollarSignIcon, PackageIcon, HomeIcon } from "lucide-react";
 
 export default function MobileMenu() {
   return (
@@ -11,6 +11,11 @@ export default function MobileMenu() {
             <Link href="/expenses" className="flex flex-col items-center">
               <DollarSignIcon size={21} />
               <p className="text-xs">Expenses</p>
+            </Link>
+          </div>
+          <div className="flex flex-col items-center justify-center rounded-lg px-2 bg-black">
+            <Link href="/" className="flex flex-col items-center">
+              <HomeIcon size={24} className="" color="white" />
             </Link>
           </div>
           <div className="flex flex-col items-center space-y-0.5">
