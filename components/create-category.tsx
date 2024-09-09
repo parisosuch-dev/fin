@@ -35,11 +35,13 @@ export default function CreateCategory() {
 
     createCategory(supabase, bucket, name, description)
       .then((res) => {
+        console.log(params.get("reference"));
         // got to expense page if reference is expense
         if (params.get("reference") === "expense") {
           router.push("/expense");
+        } else {
+          router.push("/categories");
         }
-        router.push("/categories");
       })
       .catch((e) => {
         setDisableButton(false);
