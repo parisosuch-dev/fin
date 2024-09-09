@@ -13,25 +13,14 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import useMediaQuery from "@/lib/hooks/use-media-query";
-import { getCategories } from "@/lib/supabase/category";
+import { deleteCategory, getCategories } from "@/lib/supabase/category";
 import { createClient } from "@/lib/supabase/client";
 import { Category } from "@/lib/supabase/models";
 import { CirclePlusIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { deleteCategory } from "@/lib/supabase/category";
-import { DialogClose } from "@radix-ui/react-dialog";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);

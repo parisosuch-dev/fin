@@ -54,7 +54,7 @@ export default function ExpensePage() {
     getCategories(supabase).then((res) => {
       if (res.length === 0) {
         const queryParams = new URLSearchParams({
-          first: "true",
+          reference: "expense",
         }).toString();
         router.push(`/categories/add?${queryParams}`);
       }

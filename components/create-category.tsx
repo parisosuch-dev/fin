@@ -35,7 +35,10 @@ export default function CreateCategory() {
 
     createCategory(supabase, bucket, name, description)
       .then((res) => {
-        // based on the result if success, go to categories page
+        // got to expense page if reference is expense
+        if (params.get("reference") === "expense") {
+          router.push("/expense");
+        }
         router.push("/categories");
       })
       .catch((e) => {
@@ -60,7 +63,7 @@ export default function CreateCategory() {
   return (
     <Card className="w-full sm:w-1/4 p-4 sm:px-16 sm:py-8 text-center">
       <CardTitle>
-        {params.get("first")
+        {params.get("reference")
           ? "Create Your First Category"
           : "Create a Category"}
       </CardTitle>
