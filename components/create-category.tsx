@@ -17,13 +17,14 @@ import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Bucket } from "@/lib/supabase/models";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 export default function CreateCategory() {
   const [buckets, setBuckets] = useState<Bucket[]>([]);
   const [disableButton, setDisableButton] = useState(false);
   const supabase = createClient();
   const router = useRouter();
+  const params = useSearchParams();
 
   const handleSubmit = (formData: FormData) => {
     setDisableButton(true);
@@ -58,7 +59,11 @@ export default function CreateCategory() {
 
   return (
     <Card className="w-full sm:w-1/4 p-4 sm:px-16 sm:py-8 text-center">
-      <CardTitle>Create a Category</CardTitle>
+      <CardTitle>
+        {params.get("first")
+          ? "Create Your First Category"
+          : "Create a Category"}
+      </CardTitle>
       <p className="mt-2 text-sm font-light">
         Categories help organize expenses into a group.
       </p>

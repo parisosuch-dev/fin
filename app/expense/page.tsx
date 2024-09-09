@@ -52,6 +52,12 @@ export default function ExpensePage() {
 
   useEffect(() => {
     getCategories(supabase).then((res) => {
+      if (res.length === 0) {
+        const queryParams = new URLSearchParams({
+          first: "true",
+        }).toString();
+        router.push(`/categories/add?${queryParams}`);
+      }
       // filter each category into a bucket so we can group them
       let tempCBB: { [key: string]: Category[] } = {};
       for (let category of res) {
