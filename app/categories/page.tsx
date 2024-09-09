@@ -30,15 +30,14 @@ import { CirclePlusIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { deleteCategory } from "@/lib/supabase/category";
 import { DialogClose } from "@radix-ui/react-dialog";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [open, setOpen] = useState(false);
 
   const supabase = createClient();
   const router = useRouter();
-  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
 
   useEffect(() => {
     getCategories(supabase).then((res) => {
@@ -49,9 +48,19 @@ export default function CategoriesPage() {
     });
   }, []);
 
-  const deleteCategory = (category: Category) => {
-    // TODO: delete category
-    setOpen(false);
+  const handleDelete = (category: Category) => {
+    deleteCategory(supabase, category.id)
+      .then((res) => {
+        getCategories(supabase).then((res) => {
+          if (res.length === 0) {
+            router.push("/categories/add");
+          }
+          setCategories(res);
+        });
+      })
+      .catch((e) => {
+        // TODO: handle error
+      });
   };
 
   const MobileDrawer = ({ category }: { category: Category }) => {
@@ -64,11 +73,11 @@ export default function CategoriesPage() {
             className="hover:scale-90 hover:cursor-pointer transform duration-300"
           />
         </DrawerTrigger>
-        <DrawerContent>
-          <div className="w-full">
-            <DrawerHeader>
+        <DrawerContent className="w-full flex flex-col items-center">
+          <div className="w-full sm:w-1/4 flex flex-col justify-center">
+            <DrawerHeader className="w-full flex flex-col items-center">
               <DrawerTitle>Delete Category "{category.name}"</DrawerTitle>
-              <DrawerDescription>
+              <DrawerDescription className="text-center">
                 This will remove categories from some transactions. You will
                 need to go back and change those.
               </DrawerDescription>
@@ -76,9 +85,7 @@ export default function CategoriesPage() {
             <div className="p-4 pb-0"></div>
             <DrawerFooter>
               <DrawerClose asChild>
-                <Button onClick={() => deleteCategory(category)}>
-                  Continue
-                </Button>
+                <Button onClick={() => handleDelete(category)}>Continue</Button>
               </DrawerClose>
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
@@ -87,39 +94,6 @@ export default function CategoriesPage() {
           </div>
         </DrawerContent>
       </Drawer>
-    );
-  };
-
-  const DesktopDialog = ({ category }: { category: Category }) => {
-    return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Trash2Icon
-            color="gray"
-            size={18}
-            className="hover:scale-90 transform duration-300 hover:cursor-pointer"
-          />
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete Category "{category.name}"</DialogTitle>
-            <DialogDescription>
-              This will remove categories from some transactions. You will need
-              to go back and change those.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="w-full flex flex-row space-x-2">
-            <DialogClose asChild>
-              <Button className="w-1/2" variant="outline">
-                Cancel
-              </Button>
-            </DialogClose>
-            <Button className="w-1/2" onClick={() => deleteCategory(category)}>
-              Continue
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     );
   };
 
@@ -149,13 +123,9 @@ export default function CategoriesPage() {
         ) : (
           categories.map((category) => (
             <Card className="w-full p-4 space-y-2" key={category.name}>
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-row items-center justify-between">
                 <CardTitle>{category.name}</CardTitle>
-                {isDesktop ? (
-                  <DesktopDialog category={category} />
-                ) : (
-                  <MobileDrawer category={category} />
-                )}
+                <MobileDrawer category={category} />
               </div>
               <Badge variant="outline">{category.bucket}</Badge>
               <p className="text-sm font-light">{category.description}</p>
