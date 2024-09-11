@@ -31,7 +31,7 @@ export default async function Nav() {
         <Link className="text-sm sm:text-xl font-black" href="/">
           fin [enter logo here]
         </Link>
-        <NavigationMenu className="hidden sm:visible">
+        <NavigationMenu className="hidden sm:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link href="/expenses" legacyBehavior passHref>
@@ -61,7 +61,7 @@ export default async function Nav() {
           Welcome,{" "}
           <span className="font-bold">{user?.user_metadata.display_name}</span>.
         </p>
-        <NavigationMenu className="hidden sm:visible">
+        <NavigationMenu className="hidden sm:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link href="/logout" legacyBehavior passHref>
