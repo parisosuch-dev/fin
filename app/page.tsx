@@ -7,7 +7,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center w-full">
-      <div className="w-full sm:w-1/4">
+      <div className="flex flex-1 flex-col justify-center w-full sm:w-1/4">
         <MonthExpenseChart month={date.getMonth()} year={date.getFullYear()} />
         <div className="mt-4 space-y-2">
           <Link className="w-full" href="/expense">

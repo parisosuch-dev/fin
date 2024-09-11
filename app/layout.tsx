@@ -43,7 +43,7 @@ export default function RootLayout({
         className={`${inter.className} p-4 sm:p-16 flex flex-col flex-1 min-h-screen`}
       >
         <Nav />
-        {children}
+        <div className="flex flex-col flex-1 pb-24 sm:pb-0">{children}</div>
         <MobileMenu />
       </body>
     </html>
