@@ -83,3 +83,21 @@ export async function deleteCategory(
 
   return response.count;
 }
+
+export async function editCategory(
+  supabase: SupabaseClient,
+  category: Category
+): Promise<Category> {
+  console.log(category);
+
+  const { error } = await supabase
+    .from("Category")
+    .update({ description: category.description, bucket: category.bucket })
+    .eq("id", category.id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return category;
+}
