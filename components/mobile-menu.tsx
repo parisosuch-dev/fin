@@ -4,7 +4,7 @@ import { DollarSignIcon, PackageIcon, HomeIcon } from "lucide-react";
 
 export default function MobileMenu() {
   return (
-    <Card className="fixed bottom-8 left-1/2 transform -translate-x-1/2 w-auto max-w-4xl text-center p-2 visible sm:hidden">
+    <Card className="fixed bottom-8 left-1/2 transform -translate-x-1/2 text-center p-2 visible sm:hidden">
       <div className="container mx-auto">
         <nav className="flex justify-center space-x-4">
           <div className="flex flex-col items-center space-y-0.5">
