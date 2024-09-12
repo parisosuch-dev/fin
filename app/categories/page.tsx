@@ -13,6 +13,15 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { deleteCategory, getCategories } from "@/lib/supabase/category";
 import { createClient } from "@/lib/supabase/client";
@@ -52,39 +61,31 @@ export default function CategoriesPage() {
       });
   };
 
-  const MobileDrawer = ({ category }: { category: Category }) => {
+  const DeletePopUp = ({ category }: { category: Category }) => {
     return (
-      <Drawer>
-        <DrawerTrigger asChild>
+      <Dialog>
+        <DialogTrigger asChild>
           <Trash2Icon
             color="gray"
             size={18}
             className="hover:scale-90 hover:cursor-pointer transform duration-300"
           />
-        </DrawerTrigger>
-        <DrawerContent className="w-full flex flex-col items-center">
-          <div className="w-full sm:w-1/4 flex flex-col justify-center">
-            <DrawerHeader className="w-full flex flex-col items-center">
-              <DrawerTitle>
-                Delete Category &ldquo;{category.name}&ldquo;
-              </DrawerTitle>
-              <DrawerDescription className="text-center">
-                This will remove categories from some transactions. You will
-                need to go back and change those.
-              </DrawerDescription>
-            </DrawerHeader>
-            <div className="p-4 pb-0"></div>
-            <DrawerFooter>
-              <DrawerClose asChild>
-                <Button onClick={() => handleDelete(category)}>Continue</Button>
-              </DrawerClose>
-              <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
-      </Drawer>
+        </DialogTrigger>
+        <DialogContent className="flex flex-col items-center text-center p-4 rounded-lg max-w-[400px]">
+          <DialogHeader className="flex flex-col items-center">
+            <DialogTitle>
+              Delete Category &ldquo;{category.name}&ldquo;
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              This may remove categories from some transactions. You will need
+              to go back and change those.
+            </DialogDescription>
+          </DialogHeader>
+          <Button variant="destructive" onClick={() => handleDelete(category)}>
+            Delete Category
+          </Button>
+        </DialogContent>
+      </Dialog>
     );
   };
 
@@ -116,7 +117,7 @@ export default function CategoriesPage() {
             <Card className="w-full p-4 space-y-2" key={category.name}>
               <div className="flex flex-row items-center justify-between">
                 <CardTitle>{category.name}</CardTitle>
-                <MobileDrawer category={category} />
+                <DeletePopUp category={category} />
               </div>
               <Badge variant="outline">{category.bucket}</Badge>
               <p className="text-sm font-light">{category.description}</p>
