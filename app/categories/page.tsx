@@ -212,6 +212,8 @@ export default function CategoriesPage() {
             <Skeleton className="h-[125px] w-full rounded-xl" />
             <Skeleton className="h-[125px] w-full rounded-xl" />
             <Skeleton className="h-[125px] w-full rounded-xl" />
+            <Skeleton className="h-[125px] w-full rounded-xl" />
+            <Skeleton className="h-[125px] w-full rounded-xl" />
           </div>
         ) : (
           categories.map((category) => (
