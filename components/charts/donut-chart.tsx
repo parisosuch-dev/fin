@@ -175,7 +175,7 @@ const DonutChart = React.forwardRef<HTMLDivElement, DonutChartProps>(
       category,
       colors = AvailableChartColors,
       variant = "donut",
-      valueFormatter = (value: number) => value.toString(),
+      valueFormatter = (value: number) => value.toFixed(2),
       label,
       showLabel = false,
       showTooltip = true,
