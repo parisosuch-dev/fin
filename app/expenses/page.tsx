@@ -5,12 +5,14 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/lib/supabase/client";
 import { getTransactionBetweenDates } from "@/lib/supabase/expense";
-import { Transaction } from "@/lib/supabase/models";
+import { Category, Transaction } from "@/lib/supabase/models";
 import { useEffect, useState } from "react";
 import { DollarSignIcon } from "lucide-react";
+import { getCategories } from "@/lib/supabase/category";
 
 export default function ExpensesPage() {
   const [expenses, setExpenses] = useState<Transaction[]>([]);
+  const [categories, setCategories] = useState<{ [key: number]: string }>({});
 
   const supabase = createClient();
 
@@ -19,6 +21,13 @@ export default function ExpensesPage() {
   const lastOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
   useEffect(() => {
+    getCategories(supabase).then((res) => {
+      var categoryMap: any = {};
+      for (let category of res) {
+        categoryMap[category.id] = category.name;
+      }
+      setCategories(categoryMap);
+    });
     getTransactionBetweenDates(supabase, firstOfMonth, lastOfMonth).then(
       (res) => {
         setExpenses(res.reverse());
@@ -53,7 +62,9 @@ export default function ExpensesPage() {
               <div className="flex flex-row space-x-2">
                 <p className="text-xs">{expense.date}</p>
                 <p className="text-xs">
-                  {expense.category_id ? expense.category_id : "No Category"}
+                  {expense.category_id
+                    ? categories[expense.category_id]
+                    : "No Category"}
                 </p>
               </div>
               <div className="flex flex-row w-full justify-between">
