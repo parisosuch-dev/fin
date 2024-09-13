@@ -1,14 +1,12 @@
 "use client";
 
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { getCategories } from "@/lib/supabase/category";
 import { createClient } from "@/lib/supabase/client";
 import { getTransactionBetweenDates } from "@/lib/supabase/expense";
-import { Category, Transaction } from "@/lib/supabase/models";
+import { Transaction } from "@/lib/supabase/models";
 import { useEffect, useState } from "react";
-import { DollarSignIcon } from "lucide-react";
-import { getCategories } from "@/lib/supabase/category";
 
 export default function ExpensesPage() {
   const [expenses, setExpenses] = useState<Transaction[]>([]);
