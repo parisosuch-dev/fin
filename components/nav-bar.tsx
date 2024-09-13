@@ -31,6 +31,12 @@ export default async function Nav() {
         <Link className="text-sm sm:text-xl font-black" href="/">
           fin [enter logo here]
         </Link>
+      </div>
+      <div className="sm:flex flex-row items-center space-x-4">
+        <p className="text-sm sm:text-base">
+          Welcome,{" "}
+          <span className="font-bold">{user?.user_metadata.display_name}</span>.
+        </p>
         <NavigationMenu className="hidden sm:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -53,16 +59,6 @@ export default async function Nav() {
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
-      <div className="sm:flex flex-row items-center space-x-4">
-        <p className="text-sm sm:text-base">
-          Welcome,{" "}
-          <span className="font-bold">{user?.user_metadata.display_name}</span>.
-        </p>
-        <NavigationMenu className="hidden sm:flex">
-          <NavigationMenuList>
             <NavigationMenuItem>
               <Link href="/logout" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
