@@ -13,8 +13,11 @@ export default function MobileMenu() {
               <p className="text-sm">Expenses</p>
             </Link>
           </div>
-          <div className="flex flex-col items-center justify-center rounded-lg px-4 bg-black">
-            <Link href="/" className="flex flex-col items-center">
+          <div className="flex flex-col items-center justify-center">
+            <Link
+              href="/"
+              className="flex flex-col items-center px-4 py-2 bg-black rounded-lg"
+            >
               <HomeIcon size={28} className="" color="white" />
             </Link>
           </div>
