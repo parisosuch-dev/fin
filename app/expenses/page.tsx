@@ -65,12 +65,9 @@ export default function ExpensesPage() {
           </div>
         ) : (
           expenses.map((expense) => (
-            <Dialog>
+            <Dialog key={expense.id}>
               <DialogTrigger asChild>
-                <Card
-                  className="w-full p-4 space-y-1 hover:cursor-pointer"
-                  key={expense.name}
-                >
+                <Card className="w-full p-4 space-y-1 hover:cursor-pointer">
                   <div className="flex flex-row space-x-2">
                     <p className="text-xs">{expense.date}</p>
                     <p className="text-xs">
