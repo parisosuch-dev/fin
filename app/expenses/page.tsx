@@ -84,7 +84,7 @@ export default function ExpensesPage() {
                   </div>
                 </Card>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="pt-8 px-2 sm:px-4 rounded-lg max-w-[400px]">
                 <DialogHeader>
                   <DialogTitle className="w-full flex flex-row items-center space-x-4">
                     <p className="">{expense.name}</p>
@@ -115,7 +115,7 @@ export default function ExpensesPage() {
                       <CalendarIcon size={16} />
                       <p>{new Date(expense.date).toDateString()}</p>
                     </div>
-                    <p>
+                    <p className="text-left">
                       {expense.comment
                         ? expense.comment
                         : "No comment provided"}
