@@ -67,3 +67,19 @@ export async function getTransactionBetweenDates(
 
   return transactions as Transaction[];
 }
+
+export async function getTransaction(
+  supabase: SupabaseClient,
+  transaction_id: number
+): Promise<Transaction> {
+  const { data: transaction, error } = await supabase
+    .from("Transaction")
+    .select()
+    .eq("id", transaction_id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return transaction[0] as Transaction;
+}
